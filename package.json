@@ -1,0 +1,12 @@
+{
+  "name": "aprende-redux-facilmente",
+  "version": "1.0.0",
+  "description": "Proyecto de ejemplo de Redux con Vanilla JavaScript",
+  "main": "main.js",
+  "author": "David Garcia <davidjosue.garcia@outlook.com>",
+  "license": "MIT",
+  "private": true,
+  "dependencies": {
+    "redux": "^4.1.1"
+  }
+}
