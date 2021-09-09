@@ -73,8 +73,19 @@ document.addEventListener('DOMContentLoaded', () => {
 const todosReducer = (state = {}, action) => {
   switch (action.type) {
     case 'ADD_TODO':
+      action.todo['id'] = Object.keys(state).length
+      return {
+        ...state,
+        [Object.keys(state).length]: action.todo
+      }
     case 'UPDATE_TODO':
+      return {
+        ...state,
+        [action.todo.id]: action.todo
+      }
     case 'DELETE_TODO':
+      delete state[action.todo.id]
+      return { ...state }
     default:
       return state;
   }
