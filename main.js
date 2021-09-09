@@ -22,6 +22,9 @@ let todos = {
 const drawTodos = () => {
   lista.innerHTML = '';
 
+  // Actualizar los todos antes de dibujar
+  todos = store.getState()
+
   for (let key in todos) {
     let li = document.createElement('li');
     // li.id = key;
@@ -55,9 +58,11 @@ const setListeners = (li) => {
 input.addEventListener('keydown', (e) => {
   if (e.key === 'Enter') {
     let text = e.target.value;
-    let id = Object.keys(todos).length;
-    todos[id] = { text, done: false };
-    drawTodos();
+    let todo = { text, done: false }
+    store.dispatch({
+      type: 'ADD_TODO',
+      todo
+    })
     e.target.value = ''
   }
 });
@@ -92,6 +97,13 @@ const todosReducer = (state = {}, action) => {
 };
 
 // Store
-const store = createStore(todosReducer, { name: 'BlisS' });
+const store = createStore(todosReducer, {
+  0: {
+    text: 'Crear store',
+    done: true,
+    id: 0
+  }
+});
 
-console.log(store.getState());
+// ¿Qué hacer cuando hay cambios?
+store.subscribe(drawTodos)
