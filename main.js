@@ -28,7 +28,7 @@ const drawTodos = () => {
     const classDone = todos[key].done ? 'done' : ''
     li.innerHTML = `
       <span id="${key}" class="${classDone}">${todos[key].text}</span>
-      <span>x</span>
+      <span data-id="${key}" data-action="delete">x</span>
     `;
     setListeners(li);
     lista.appendChild(li);
@@ -37,6 +37,13 @@ const drawTodos = () => {
 
 const setListeners = (li) => {
   li.addEventListener('click', (e) => {
+    if (e.target.getAttribute('data-action') === 'delete') {
+      let key = e.target.getAttribute('data-id');
+      delete todos[key]
+      drawTodos()
+      return  
+    }
+
     const { id: key } = e.target;
     todos[key].done = !todos[key].done;
     drawTodos();
