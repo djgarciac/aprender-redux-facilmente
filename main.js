@@ -1,4 +1,5 @@
-// import * as Redux from 'redux'
+import { createStore } from 'redux';
+
 // Nodes
 let input = document.querySelector('#input');
 let lista = document.querySelector('#lista');
@@ -65,3 +66,21 @@ input.addEventListener('keydown', (e) => {
 document.addEventListener('DOMContentLoaded', () => {
   drawTodos();
 });
+
+// REDUX
+
+// Reducer
+const todosReducer = (state = {}, action) => {
+  switch (action.type) {
+    case 'ADD_TODO':
+    case 'UPDATE_TODO':
+    case 'DELETE_TODO':
+    default:
+      return state;
+  }
+};
+
+// Store
+const store = createStore(todosReducer, { name: 'BlisS' });
+
+console.log(store.getState());
