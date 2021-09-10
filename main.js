@@ -30,6 +30,7 @@ const drawEmails = () => {
       <span>${email}</span>
       <span id="${email}">x</span>
     `;
+    setEmailClickListener(li);
     emailsList.appendChild(li);
   });
 };
@@ -73,6 +74,16 @@ const setListeners = (li) => {
     });
   });
 }
+
+const setEmailClickListener = (li) => {
+  li.addEventListener('click', (e) => {
+    let { id: email } = e.target;
+    store.dispatch({
+      type: 'DELETE_EMAIL',
+      email
+    });
+  });
+};
 
 // Listeners
 input.addEventListener('keydown', (e) => {
