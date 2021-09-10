@@ -2,7 +2,9 @@ import { createStore, combineReducers } from 'redux';
 
 // Nodes
 let input = document.querySelector('#input');
+let addEmail = document.querySelector('#addEmail');
 let lista = document.querySelector('#lista');
+let emailsList = document.querySelector('#emailsList');
 let todos = {
   0: {
     text: 'Ir al cine',
@@ -19,6 +21,12 @@ let todos = {
 };
 
 // Functions
+const drawEmails = () => {
+  emailsList.innerHTML = '';
+  let emails = store.getState().emails;
+  console.log(emails);
+};
+
 const drawTodos = () => {
   lista.innerHTML = '';
 
@@ -67,14 +75,26 @@ input.addEventListener('keydown', (e) => {
     store.dispatch({
       type: 'ADD_TODO',
       todo
-    })
-    e.target.value = ''
+    });
+    e.target.value = '';
+  }
+});
+
+addEmail.addEventListener('keydown', (e) => {
+  if (e.key === 'Enter') {
+    let email = e.target.value;
+    store.dispatch({
+      type: 'ADD_EMAIL',
+      email
+    });
+    e.target.value = '';
   }
 });
 
 // Init
 document.addEventListener('DOMContentLoaded', () => {
   drawTodos();
+  drawEmails();
 });
 
 // REDUX
@@ -82,12 +102,12 @@ document.addEventListener('DOMContentLoaded', () => {
 // Segundo reducer para correos
 const emailsReducer = (state = [], action) => {
   switch (action.type) {
-    case 'ADD_MAIL':
+    case 'ADD_EMAIL':
       return [
         ...state,
         action.email
       ]
-    case 'DELETE_MAIL':
+    case 'DELETE_EMAIL':
       return [...state.filter(mail => mail !== action.email)]
     default:
       return state;
@@ -138,4 +158,5 @@ const store = createStore(rootReducer, {
 });
 
 // ¿Qué hacer cuando hay cambios?
-store.subscribe(drawTodos)
+// store.subscribe(drawTodos)
+store.subscribe(drawEmails)
