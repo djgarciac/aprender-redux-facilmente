@@ -43,9 +43,11 @@ const setListeners = (li) => {
   li.addEventListener('click', (e) => {
     if (e.target.getAttribute('data-action') === 'delete') {
       let key = e.target.getAttribute('data-id');
-      delete todos[key]
-      drawTodos()
-      return  
+      store.dispatch({
+        type: 'DELETE_TODO',
+        id: key
+      });
+      return;
     }
 
     const { id: key } = e.target;
@@ -81,19 +83,20 @@ document.addEventListener('DOMContentLoaded', () => {
 const todosReducer = (state = {}, action) => {
   switch (action.type) {
     case 'ADD_TODO':
-      action.todo['id'] = Object.keys(state).length
+      action.todo['id'] = Object.keys(state).length;
       return {
         ...state,
         [Object.keys(state).length]: action.todo
-      }
+      };
     case 'UPDATE_TODO':
       return {
         ...state,
         [action.todo.id]: action.todo
-      }
+      };
     case 'DELETE_TODO':
-      delete state[action.todo.id]
-      return { ...state }
+      // delete state[action.todo.id]
+      delete state[action.id];
+      return { ...state };
     default:
       return state;
   }
