@@ -1,4 +1,4 @@
-import { createStore } from 'redux';
+import { createStore, combineReducers } from 'redux';
 
 // Nodes
 let input = document.querySelector('#input');
@@ -79,6 +79,21 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // REDUX
 
+// Segundo reducer para correos
+const emailsReducer = (state = [], action) => {
+  switch (action.type) {
+    case 'ADD_MAIL':
+      return [
+        ...state,
+        action.email
+      ]
+    case 'DELETE_MAIL':
+      return [...state.filter(mail => mail !== action.email)]
+    default:
+      return state;
+  }
+};
+
 // Reducer
 const todosReducer = (state = {}, action) => {
   switch (action.type) {
@@ -102,13 +117,24 @@ const todosReducer = (state = {}, action) => {
   }
 };
 
+// Combinar los reducers
+let rootReducer = combineReducers({
+  todos: todosReducer,
+  emails: emailsReducer
+})
+
 // Store
-const store = createStore(todosReducer, {
-  0: {
-    text: 'Crear store',
-    done: true,
-    id: 0
-  }
+const store = createStore(rootReducer, {
+  todos: {
+    0: {
+      text: 'Crear store',
+      done: true,
+      id: 0
+    }
+  },
+  emails: [
+    'bliss@gmail.com'
+  ]
 });
 
 // ¿Qué hacer cuando hay cambios?
