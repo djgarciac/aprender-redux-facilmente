@@ -23,7 +23,7 @@ const drawTodos = () => {
   lista.innerHTML = '';
 
   // Actualizar los todos antes de dibujar
-  todos = store.getState()
+  todos = store.getState().todos;
 
   for (let key in todos) {
     let li = document.createElement('li');
