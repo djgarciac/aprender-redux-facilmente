@@ -50,7 +50,10 @@ const setListeners = (li) => {
 
     const { id: key } = e.target;
     todos[key].done = !todos[key].done;
-    drawTodos();
+    store.dispatch({
+      type: 'UPDATE_TODO',
+      todo: todos[key]
+    });
   });
 }
 
