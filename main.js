@@ -24,7 +24,14 @@ let todos = {
 const drawEmails = () => {
   emailsList.innerHTML = '';
   let emails = store.getState().emails;
-  console.log(emails);
+  emails.forEach(email => {
+    let li = document.createElement('li');
+    li.innerHTML = `
+      <span>${email}</span>
+      <span id="${email}">x</span>
+    `;
+    emailsList.appendChild(li);
+  });
 };
 
 const drawTodos = () => {
@@ -158,5 +165,7 @@ const store = createStore(rootReducer, {
 });
 
 // ¿Qué hacer cuando hay cambios?
-// store.subscribe(drawTodos)
-store.subscribe(drawEmails)
+store.subscribe(() => {
+  drawTodos();
+  drawEmails();
+})
