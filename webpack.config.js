@@ -3,7 +3,7 @@ const webpack= require('webpack')
 
 module.exports = {
   entry: './main.js',
-  mode: 'none',
+  mode: 'production',
   output: {
     path: path.join(__dirname, 'build'),
     filename: 'fixter.js'
